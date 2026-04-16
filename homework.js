@@ -58,7 +58,6 @@ const orders = [
 function getProductById(products, productId) {
   // 請實作此函式
   return products.find(product => product.id === productId) || null;
-
 }
 
 /**
@@ -69,7 +68,7 @@ function getProductById(products, productId) {
  */
 function getProductsByCategory(products, category) {
   // 請實作此函式
-  if (category ==="全部"){
+  if (category ==="全部"){ //如果輸入的分類是全部
     return products;
   }
   return products.filter(product => product.category === category);
@@ -95,9 +94,8 @@ function getDiscountRate(product) {
  */
 function getAllCategories(products) {
   // 請實作此函式
-  const categories = products.map(product => product.category);
-  return [...new Set(categories)];
-
+  const categories = products.map(product => product.category); //把分類單獨找出來放在一個陣列裡
+  return [...new Set(categories)]; //剔除重覆的分類
 }
 
 // ========================================
@@ -177,7 +175,7 @@ function addToCart(carts, product, quantity) {
   // 請實作此函式
   const productIndex = carts.findIndex(cartItem => cartItem.product.id === product.id); //購物車是否存在
   if (productIndex  !== -1){
-    //合併數量
+    //有找到合併數量
     return carts.map((cartItem,index)=>{
       if(index ===productIndex ){
         return {
@@ -188,7 +186,7 @@ function addToCart(carts, product, quantity) {
       return cartItem;
     })
   }
-    //新增一筆
+    //沒找到新增一筆
     const newCart ={
       id:`cart-${Date.now()}`,
       product,
@@ -251,7 +249,7 @@ function clearCart() {
 function calculateTotalRevenue(orders) {
   // 請實作此函式
   return orders
-  .filter(order => order.paid)
+  .filter(order => order.paid)  //先篩選出已付款訂單再計算
   .reduce((total,order)=>total + order.total,0);
 }
 
@@ -306,10 +304,10 @@ function groupOrdersByPayment(orders) {
   // 請實作此函式
   return orders.reduce((acc,order)=>{
     const paymentType = order.user.payment;
-    if (!acc[paymentType]){
-      acc[paymentType]=[]
+    if (!acc[paymentType]){ //沒有這個付款方式
+      acc[paymentType]=[]  //就新增一個陣列
     }
-    acc[paymentType].push(order);
+    acc[paymentType].push(order); //有就放進陣列裡
     return acc;
   },{});
 }
